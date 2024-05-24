@@ -37,7 +37,7 @@ class _SplashScreenState extends State<SplashScreen> {
             ),
             SizedBox(height: 20),
             Text(
-              'Welcome',
+              '',
               style: TextStyle(fontSize: 24, color: Colors.white),
             ),
           ],

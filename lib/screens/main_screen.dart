@@ -11,7 +11,7 @@ class MainScreen extends StatelessWidget {
       appBar: AppBar(
         centerTitle: true,
         backgroundColor: Colors.black,
-        title: const Text('Home Page'),
+        title: const Text('Welcome'),
       ),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
