@@ -25,11 +25,22 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.blue,
+      backgroundColor: Colors.black,
       body: Center(
-        child: Text(
-          'Splash Screen',
-          style: TextStyle(fontSize: 24, color: Colors.white),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Image.asset(
+              'assets/mie_logo.png', // Adjust the path to your logo
+              width: 300, // Adjust size as needed
+              height: 300, // Adjust size as needed
+            ),
+            SizedBox(height: 20),
+            Text(
+              'Welcome',
+              style: TextStyle(fontSize: 24, color: Colors.white),
+            ),
+          ],
         ),
       ),
     );
