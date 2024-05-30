@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'otp_screen.dart';
+import 'login_screen.dart'; // Importing the login screen to navigate back
 
-class LoginScreen extends StatelessWidget {
-  const LoginScreen({Key? key}) : super(key: key);
+class OTPScreen extends StatelessWidget {
+  const OTPScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -10,26 +10,25 @@ class LoginScreen extends StatelessWidget {
       appBar: AppBar(
         centerTitle: true,
         backgroundColor: Colors.black,
-        title: const Text('Login'),
+        title: const Text('OTP Verification'),
       ),
       body: Padding(
         padding: const EdgeInsets.all(20.0),
-        child: LoginForm(),
+        child: OTPForm(),
       ),
     );
   }
 }
 
-class LoginForm extends StatefulWidget {
-  const LoginForm({Key? key}) : super(key: key);
+class OTPForm extends StatefulWidget {
+  const OTPForm({Key? key}) : super(key: key);
 
   @override
-  _LoginFormState createState() => _LoginFormState();
+  _OTPFormState createState() => _OTPFormState();
 }
 
-class _LoginFormState extends State<LoginForm> {
-  final TextEditingController _usernameController = TextEditingController();
-  final TextEditingController _passwordController = TextEditingController();
+class _OTPFormState extends State<OTPForm> {
+  final TextEditingController _otpController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -37,22 +36,16 @@ class _LoginFormState extends State<LoginForm> {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         _buildTextField(
-          controller: _usernameController,
-          labelText: 'Username',
-        ),
-        const SizedBox(height: 20),
-        _buildTextField(
-          controller: _passwordController,
-          labelText: 'Password',
-          obscureText: true,
+          controller: _otpController,
+          labelText: 'OTP',
         ),
         const SizedBox(height: 20),
         ElevatedButton(
           onPressed: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => OTPScreen()),
-            );
+            // Add logic to verify OTP here
+            print('OTP verification successful');
+            // Navigate back to login screen after OTP verification
+            Navigator.pop(context);
           },
           style: ElevatedButton.styleFrom(
             backgroundColor: Colors.blue,
@@ -61,7 +54,7 @@ class _LoginFormState extends State<LoginForm> {
             textStyle: const TextStyle(fontSize: 16),
             minimumSize: const Size(double.infinity, 50), // Adjust button height
           ),
-          child: const Text('Login'),
+          child: const Text('Verify OTP'),
         ),
       ],
     );
