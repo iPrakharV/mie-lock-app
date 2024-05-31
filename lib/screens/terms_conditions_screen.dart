@@ -13,7 +13,7 @@ class TermsConditionsScreen extends StatelessWidget {
         child: Container(
           padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 20.0),
           child: Text(
-            'MIE Login app terms and conditions here',
+            'MIE Login app terms and conditions here.',
             style: TextStyle(fontSize: 14.0),
           ),
         ),
