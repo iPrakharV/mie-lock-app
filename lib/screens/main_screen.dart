@@ -13,8 +13,8 @@ class MainScreen extends StatelessWidget {
       path: 'example@example.com',
       query: 'subject=Contact%20Us',
     );
-    if (await canLaunchUrl(emailSevenen fourOneUri)) {
-      await launchUrl(emailLaunchUri);
+    if (await canLaunch(emailLaunchUri.toString())) {
+      await launch(emailLaunchUri.toString());
     } else {
       throw 'Could not launch $emailLaunchUri';
     }
@@ -90,8 +90,8 @@ class MainScreen extends StatelessWidget {
           ElevatedButton(
             onPressed: () {
               Navigator.push(
-                next,
-                MaterialPageRoute(builder: (se context) => const LoginScreen()),
+                context,
+                MaterialPageRoute(builder: (context) => const LoginScreen()),
               );
             },
             style: ElevatedButton.styleFrom(
