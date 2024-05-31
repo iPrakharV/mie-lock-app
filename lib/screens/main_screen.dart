@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'login_screen.dart'; 
-import 'register_screen.dart'; 
+import 'login_screen.dart';
+import 'register_screen.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'terms_conditions_screen.dart'; 
+import 'terms_conditions_screen.dart';
 
 class MainScreen extends StatelessWidget {
   const MainScreen({Key? key}) : super(key: key);
@@ -10,7 +10,7 @@ class MainScreen extends StatelessWidget {
   void _launchEmail() async {
     final Uri emailLaunchUri = Uri(
       scheme: 'mailto',
-      path: 'example@example.com',
+      path: 'connect@iprakharv.com', // Changed to connect@iprakharv.com
       query: 'subject=Contact%20Us',
     );
     if (await canLaunch(emailLaunchUri.toString())) {
@@ -49,7 +49,8 @@ class MainScreen extends StatelessWidget {
               onTap: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => const TermsConditionsScreen()),
+                  MaterialPageRoute(
+                      builder: (context) => const TermsConditionsScreen()),
                 );
               },
             ),
