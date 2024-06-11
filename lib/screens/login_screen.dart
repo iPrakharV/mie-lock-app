@@ -30,6 +30,7 @@ class LoginForm extends StatefulWidget {
 class _LoginFormState extends State<LoginForm> {
   final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
+  String? _errorMessage;
 
   @override
   Widget build(BuildContext context) {
@@ -46,13 +47,30 @@ class _LoginFormState extends State<LoginForm> {
           labelText: 'Password',
           obscureText: true,
         ),
+        if (_errorMessage != null) 
+          Padding(
+            padding: const EdgeInsets.only(top: 10),
+            child: Text(
+              _errorMessage!,
+              style: TextStyle(color: Colors.red),
+            ),
+          ),
         const SizedBox(height: 20),
         ElevatedButton(
           onPressed: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => OTPScreen()),
-            );
+            if (_usernameController.text.isEmpty || _passwordController.text.isEmpty) {
+              setState(() {
+                _errorMessage = 'Please enter both username and password.';
+              });
+            } else {
+              setState(() {
+                _errorMessage = null;
+              });
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => OTPScreen()),
+              );
+            }
           },
           style: ElevatedButton.styleFrom(
             backgroundColor: Colors.blue,
