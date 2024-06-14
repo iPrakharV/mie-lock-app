@@ -8,7 +8,6 @@ class SecurityQuestionsScreen extends StatefulWidget {
 }
 
 class _SecurityQuestionsScreenState extends State<SecurityQuestionsScreen> {
-  // Predefined list of security questions
   final List<String> _questions = [
     "What was your first pet's name?",
     "What was the model of your first car?",
@@ -38,89 +37,48 @@ class _SecurityQuestionsScreenState extends State<SecurityQuestionsScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              DropdownButtonFormField<String>(
+              _buildDropdownButtonFormField(
                 value: _selectedQuestion1,
-                decoration: const InputDecoration(
-                  labelText: 'Select your first security question',
-                  border: OutlineInputBorder(),
-                ),
-                items: _questions.map<DropdownMenuItem<String>>((String value) {
-                  return DropdownMenuItem<String>(
-                    value: value,
-                    child: Text(value),
-                  );
-                }).toList(),
-                onChanged: (String? newValue) {
-                  setState(() {
-                    _selectedQuestion1 = newValue;
-                  });
-                },
+                labelText: 'Select your first security question',
+                items: _questions,
+                onChanged: (value) => setState(() {
+                  _selectedQuestion1 = value;
+                }),
               ),
               const SizedBox(height: 20),
-              TextField(
-                controller: _answer1Controller,
-                decoration: const InputDecoration(
-                  labelText: 'Answer',
-                  border: OutlineInputBorder(),
-                ),
-              ),
+              _buildTextField(controller: _answer1Controller, labelText: 'Answer'),
               const SizedBox(height: 20),
-              DropdownButtonFormField<String>(
+              _buildDropdownButtonFormField(
                 value: _selectedQuestion2,
-                decoration: const InputDecoration(
-                  labelText: 'Select your second security question',
-                  border: OutlineInputBorder(),
-                ),
-                items: _questions.map<DropdownMenuItem<String>>((String value) {
-                  return DropdownMenuItem<String>(
-                    value: value,
-                    child: Text(value),
-                  );
-                }).toList(),
-                onChanged: (String? newValue) {
-                  setState(() {
-                    _selectedQuestion2 = newValue;
-                  });
-                },
+                labelText: 'Select your second security question',
+                items: _questions,
+                onChanged: (value) => setState(() {
+                  _selectedQuestion2 = value;
+                }),
               ),
               const SizedBox(height: 20),
-              TextField(
-                controller: _answer2Controller,
-                decoration: const InputDecoration(
-                  labelText: 'Answer',
-                  border: OutlineInputBorder(),
-                ),
-              ),
+              _buildTextField(controller: _answer2Controller, labelText: 'Answer'),
               const SizedBox(height: 20),
-              DropdownButtonFormField<String>(
+              _buildDropdownButtonFormField(
                 value: _selectedQuestion3,
-                decoration: const InputDecoration(
-                  labelText: 'Select your third security question',
-                  border: OutlineInputBorder(),
-                ),
-                items: _questions.map<DropdownMenuItem<String>>((String value) {
-                  return DropdownMenuItem<String>(
-                    value: value,
-                    child: Text(value),
-                  );
-                }).toList(),
-                onChanged: (String? newValue) {
-                  setState(() {
-                    _selectedQuestion3 = newValue;
-                  });
-                },
+                labelText: 'Select your third security question',
+                items: _questions,
+                onChanged: (value) => setState(() {
+                  _selectedQuestion3 = value;
+                }),
               ),
               const SizedBox(height: 20),
-              TextField(
-                controller: _answer3Controller,
-                decoration: const InputDecoration(
-                  labelText: 'Answer',
-                  border: OutlineInputBorder(),
-                ),
-              ),
+              _buildTextField(controller: _answer3Controller, labelText: 'Answer'),
               const SizedBox(height: 20),
               ElevatedButton(
-                onPressed: () => _setupComplete(),
+                onPressed: _setupComplete,
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.blue,
+                  foregroundColor: Colors.white,
+                  padding: const EdgeInsets.symmetric(vertical: 16.0),
+                  textStyle: const TextStyle(fontSize: 16),
+                  minimumSize: const Size(double.infinity, 50),
+                ),
                 child: const Text('Complete Setup'),
               ),
             ],
@@ -130,9 +88,42 @@ class _SecurityQuestionsScreenState extends State<SecurityQuestionsScreen> {
     );
   }
 
+  Widget _buildDropdownButtonFormField({
+    required String? value,
+    required String labelText,
+    required List<String> items,
+    required void Function(String?) onChanged,
+  }) {
+    return DropdownButtonFormField<String>(
+      value: value,
+      decoration: InputDecoration(
+        labelText: labelText,
+        border: OutlineInputBorder(),
+      ),
+      items: items.map<DropdownMenuItem<String>>((String value) {
+        return DropdownMenuItem<String>(
+          value: value,
+          child: Text(value),
+        );
+      }).toList(),
+      onChanged: onChanged,
+    );
+  }
+
+  Widget _buildTextField({
+    required TextEditingController controller,
+    required String labelText,
+  }) {
+    return TextField(
+      controller: controller,
+      decoration: InputDecoration(
+        labelText: labelText,
+        border: OutlineInputBorder(),
+      ),
+    );
+  }
+
   void _setupComplete() {
-    // Logic to save security questions and answers
-    print('Security questions set with answers.');
-    Navigator.popUntil(context, ModalRoute.withName('/')); // Navigate back to the home screen
+    Navigator.popUntil(context, ModalRoute.withName('/'));
   }
 }
