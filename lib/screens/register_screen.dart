@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart'; // Import this to use input formatters
-import 'security_questions_screen.dart'; // Import the security questions screen
+import 'package:flutter/services.dart';
+import 'security_questions_screen.dart';
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({Key? key}) : super(key: key);
@@ -14,7 +14,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _userIdController = TextEditingController();
   final TextEditingController _phoneController = TextEditingController();
-  final _formKey = GlobalKey<FormState>(); // Add a key for the form
+  final _formKey = GlobalKey<FormState>();
+  String? _errorMessage;
 
   @override
   Widget build(BuildContext context) {
@@ -28,76 +29,60 @@ class _RegisterScreenState extends State<RegisterScreen> {
         child: Padding(
           padding: const EdgeInsets.all(20.0),
           child: Form(
-            key: _formKey, // Use the form key
+            key: _formKey,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                TextFormField(
+                _buildTextField(
                   controller: _nameController,
-                  decoration: const InputDecoration(
-                    labelText: 'Name',
-                    border: OutlineInputBorder(),
-                  ),
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Please enter your name';
-                    }
-                    return null;
-                  },
+                  labelText: 'Name',
                 ),
                 const SizedBox(height: 20),
-                TextFormField(
+                _buildTextField(
                   controller: _emailController,
-                  decoration: const InputDecoration(
-                    labelText: 'Email',
-                    border: OutlineInputBorder(),
-                  ),
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Please enter your email';
-                    }
-                    return null;
-                  },
+                  labelText: 'Email',
                 ),
                 const SizedBox(height: 20),
-                TextFormField(
+                _buildTextField(
                   controller: _userIdController,
-                  decoration: const InputDecoration(
-                    labelText: 'User ID',
-                    border: OutlineInputBorder(),
-                  ),
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Please create a user ID';
-                    }
-                    return null;
-                  },
+                  labelText: 'User ID',
                 ),
                 const SizedBox(height: 20),
-                TextFormField(
+                _buildTextField(
                   controller: _phoneController,
-                  decoration: const InputDecoration(
-                    labelText: 'Phone Number',
-                    border: OutlineInputBorder(),
-                  ),
+                  labelText: 'Phone Number',
                   keyboardType: TextInputType.phone,
-                  inputFormatters: [
-                    FilteringTextInputFormatter.digitsOnly,
-                  ],
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Please enter your phone number';
-                    }
-                    return null;
-                  },
+                  inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                 ),
+                if (_errorMessage != null) 
+                  Padding(
+                    padding: const EdgeInsets.only(top: 10),
+                    child: Text(
+                      _errorMessage!,
+                      style: TextStyle(color: Colors.red),
+                    ),
+                  ),
                 const SizedBox(height: 20),
                 ElevatedButton(
                   onPressed: () {
                     if (_formKey.currentState!.validate()) {
+                      setState(() {
+                        _errorMessage = null;
+                      });
                       _register();
+                    } else {
+                      setState(() {
+                        _errorMessage = 'Please fill all fields correctly.';
+                      });
                     }
                   },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.blue,
+                    foregroundColor: Colors.white,
+                    padding: const EdgeInsets.symmetric(vertical: 16.0),
+                    textStyle: const TextStyle(fontSize: 16),
+                    minimumSize: const Size(double.infinity, 50),
+                  ),
                   child: const Text('Next'),
                 ),
               ],
@@ -105,6 +90,31 @@ class _RegisterScreenState extends State<RegisterScreen> {
           ),
         ),
       ),
+    );
+  }
+
+  Widget _buildTextField({
+    required TextEditingController controller,
+    required String labelText,
+    TextInputType? keyboardType,
+    List<TextInputFormatter>? inputFormatters,
+    bool obscureText = false,
+  }) {
+    return TextFormField(
+      controller: controller,
+      obscureText: obscureText,
+      keyboardType: keyboardType,
+      inputFormatters: inputFormatters,
+      decoration: InputDecoration(
+        labelText: labelText,
+        border: OutlineInputBorder(),
+      ),
+      validator: (value) {
+        if (value == null || value.isEmpty) {
+          return 'Please enter $labelText';
+        }
+        return null;
+      },
     );
   }
 
